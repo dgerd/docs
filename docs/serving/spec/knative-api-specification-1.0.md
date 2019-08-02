@@ -80,7 +80,7 @@ This document considers two users of a given Knative Serving environment, and is
 In order to validate the controls described in [Resource Overview](#resource-overview), the following Kubernetes RBAC profile may be applied in a Kubernetes cluster. This Kubernetes RBAC is an illustrative example of the minimal profile rather than a requirement. This Role should be sufficient to develop, deploy, and manage a set of serving applications within a single namespace. Knative Conformance tests against "MUST", "MUST NOT", and "REQUIRED" conditions are expected to pass when using this profile:
 
 
-```
+```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -578,7 +578,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>Field Name</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -591,7 +591,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
    <td><code>template</code>
    </td>
    <td>
-<a href="#revisiontemplatespec">RevisionTemplateSpec</a> \
+<a href="#revisiontemplatespec">RevisionTemplateSpec</a>
 (Required)
    </td>
    <td>A template for the current desired application state. Changes to <code>template</code> will cause a new Revision to be created
@@ -603,9 +603,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
   <tr>
    <td><code>traffic</code>
    </td>
-   <td>[]
-<a href="#traffic-target">TrafficTarget</a>
-<p>
+   <td>[]<a href="#traffictarget">TrafficTarget</a>
 (Optional)
    </td>
    <td>Traffic specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest <code>Ready</code> Revision. The contents of the Service's TrafficTarget is used to create a corresponding Route.
@@ -622,7 +620,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -668,7 +666,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
    <td>An implementation of the 
 
 
-<a href="#addressable">Addressable</a> contract (an object with a <code>url</code> string).
+<a href="#addressable-interface">Addressable</a> contract (an object with a <code>url</code> string).
    </td>
    <td>A duck-typed interface for loading the delivery address of the destination, copied from the owned Route. The URL provided in address MAY only be internally-routable.
    </td>
@@ -678,10 +676,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
   <tr>
    <td><code>traffic</code>
    </td>
-   <td>[]
-
-
-<a href="#traffictarget">TrafficTarget</a>
+   <td>[]<a href="#traffictarget">TrafficTarget</a>
    </td>
    <td>Detailed current traffic split routing information.
    </td>
@@ -727,7 +722,7 @@ Configuration `labels` and `annotations` MUST NOT be copied to the `labels` and 
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -743,7 +738,6 @@ Configuration `labels` and `annotations` MUST NOT be copied to the `labels` and 
 
 
 <a href="#revisiontemplatespec">RevisionTemplateSpec</a>
-<p>
 (Required)
    </td>
    <td>A template for the current desired application state. Changes to <code>template</code> will cause a new Revision to be created 
@@ -763,7 +757,7 @@ Configuration `labels` and `annotations` MUST NOT be copied to the `labels` and 
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -832,7 +826,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -844,11 +838,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
   <tr>
    <td><code>traffic</code>
    </td>
-   <td>[]
-
-
-<a href="#traffictarget">TrafficTarget</a>
-<p>
+   <td>[]<a href="#traffictarget">TrafficTarget</a>
 (Optional)
    </td>
    <td>Traffic specifies how to distribute traffic over a collection of Revisions belonging to the Service. If traffic is empty or not provided, defaults to 100% traffic to the latest Ready Revision.
@@ -865,7 +855,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -913,7 +903,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
    <td>An implementation of the 
 
 
-<a href="#addressable">Addressable</a> contract (an object with a <code>url</code> string).
+<a href="#addressable-interface">Addressable</a> contract (an object with a <code>url</code> string).
    </td>
    <td>A duck-typed interface for loading the delivery address of the destination. The URL provided in address MAY only be internally-routable.
    </td>
@@ -923,10 +913,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
   <tr>
    <td><code>traffic</code>
    </td>
-   <td>[]
-
-
-<a href="#traffictarget">TrafficTarget</a>
+   <td>[]<a href="#traffictarget">TrafficTarget</a>
    </td>
    <td>Detailed current traffic split routing information.
    </td>
@@ -950,7 +937,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -962,15 +949,9 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
   <tr>
    <td><code>containers</code>
    </td>
-   <td>[]
-
-
-<a href="#container">Container</a>
-<p>
+   <td>[]<a href="#container">Container</a>
 (Required)
-<p>
 Min: 1
-<p>
 Max: 1
    </td>
    <td>Specifies the parameters used to execute each container instance corresponding to this Revision.
@@ -981,11 +962,7 @@ Max: 1
   <tr>
    <td><code>volumes</code>
    </td>
-   <td>[]
-
-
-<a href="#volume">Volume</a>
-<p>
+   <td>[]<a href="#volume">Volume</a>
 (Optional)
    </td>
    <td>A list of Volumes to make available to <code>containers[0]</code>.
@@ -997,7 +974,6 @@ Max: 1
    <td><code>timeoutSeconds</code>
    </td>
    <td>int
-<p>
 (Optional)
    </td>
    <td>The maximum duration in seconds that the request routing layer will wait for a request delivered to a container to progress (send network traffic). If unspecified, a system default will be provided.
@@ -1009,9 +985,7 @@ Max: 1
    <td><code>containerConcurrency</code>
    </td>
    <td>int
-<p>
 (Optional)
-<p>
 Default: 0
    </td>
    <td>The maximum number of concurrent requests being handled by a single instance of <code>containers[0]</code>. The default value is 0, which means that the system decides.
@@ -1028,7 +1002,6 @@ See
    <td><code>serviceAccountName</code>
    </td>
    <td>string
-<p>
 (Optional)
    </td>
    <td>The name of a Service Account which <code>containers[0]</code> should be run as. The Service Account should be used to provide access and authorization to the container.
@@ -1045,7 +1018,7 @@ See
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1101,7 +1074,7 @@ Although `container,` `volumes,` and types that they reference are based upon co
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1201,7 +1174,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1245,7 +1218,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1281,10 +1254,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
   <tr>
    <td><code>env</code>
    </td>
-   <td>[]
-
-
-<a href="#envvar">EnvVar</a>
+   <td>[]<a href="#envvar">EnvVar</a>
 <p>
 (Optional)
    </td>
@@ -1296,10 +1266,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
   <tr>
    <td><code>envFrom</code>
    </td>
-   <td>[]
-
-
-<a href="#envfromsource">EnvFromSource</a>
+   <td>[]<a href="#envfromsource">EnvFromSource</a>
 <p>
 (Optional)
    </td>
@@ -1336,8 +1303,6 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td><code>livenessProbe</code>
    </td>
    <td>
-
-
 <a href="#probe">Probe</a>
 <p>
 (Optional)
@@ -1362,10 +1327,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
   <tr>
    <td><code>ports</code>
    </td>
-   <td>[]
-
-
-<a href="#containerport">ContainerPort</a>
+   <td>[]<a href="#containerport">ContainerPort</a>
 <p>
 (Optional)
 <p>
@@ -1450,10 +1412,7 @@ Max: 1
   <tr>
    <td><code>volumeMounts</code>
    </td>
-   <td>[]
-
-
-<a href="#volumemount">VolumeMount</a>
+   <td>[]<a href="#volumemount">VolumeMount</a>
 <p>
 (Optional)
    </td>
@@ -1483,7 +1442,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1540,7 +1499,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1588,7 +1547,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1636,7 +1595,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1684,7 +1643,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1781,7 +1740,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1835,7 +1794,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1865,7 +1824,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1926,7 +1885,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1954,7 +1913,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -1992,7 +1951,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2044,7 +2003,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2082,7 +2041,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2120,7 +2079,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2158,7 +2117,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2186,7 +2145,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2244,7 +2203,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2301,7 +2260,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2323,10 +2282,7 @@ Max: 1
   <tr>
    <td><code>items</code>
    </td>
-   <td>[]
-
-
-<a href="#keytopath">KeyToPath</a>
+   <td>[]<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#configmapvolumesource-v1-core">core/v1.ConfigMapVolumeSource</a>.
    </td>
@@ -2362,7 +2318,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2384,10 +2340,7 @@ Max: 1
   <tr>
    <td><code>items</code>
    </td>
-   <td>[]
-
-
-<a href="#keytopath">KeyToPath</a>
+   <td>[]<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#secretvolumesource-v1-core">core/v1.SecretVolumeSource</a>.
    </td>
@@ -2423,7 +2376,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2445,10 +2398,7 @@ Max: 1
   <tr>
    <td><code>sources</code>
    </td>
-   <td>[]
-
-
-<a href="#volumeprojection">VolumeProjection</a>
+   <td>[]<a href="#volumeprojection">VolumeProjection</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#projectedvolumesource-v1-core">core/v1.ProjectedVolumeSource</a>.
    </td>
@@ -2464,7 +2414,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2512,7 +2462,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2556,7 +2506,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2568,10 +2518,7 @@ Max: 1
   <tr>
    <td><code>items</code>
    </td>
-   <td>[]
-
-
-<a href="#keytopath">KeyToPath</a>
+   <td>[]<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#configmapprojection-v1-core">core/v1.ConfigMapProjection.</a>
    </td>
@@ -2607,7 +2554,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
@@ -2619,10 +2566,7 @@ Max: 1
   <tr>
    <td><code>items</code>
    </td>
-   <td>[]
-
-
-<a href="#keytopath">KeyToPath</a>
+   <td>[]<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#secretprojection-v1-core">core/v1.SecretProjection.</a>
    </td>
@@ -2658,7 +2602,7 @@ Max: 1
 
 <table>
   <tr>
-   <td><strong><code>Field Name</code></strong>
+   <td><strong>FieldName</strong>
    </td>
    <td><strong>Field Type</strong>
    </td>
