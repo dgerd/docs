@@ -42,8 +42,6 @@ APPROVED</p>
   </tr>
 </table>
 
-[TOC]
-
 # Abstract
 
 The Knative serving platform provides common abstractions for managing request-driven, short-lived, stateless compute resources in the style of common FaaS and PaaS offerings. This document describes the structure, lifecycle and management of Knative resources in the context of the [Kubernetes Resource Model](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/architecture/resource-management.md). An understanding of the Kubernetes API interface and the capabilities of [Kubernetes Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) is assumed. The Knative Serving API surface aims to support the following additional constraints beyond the general Kubernetes model:
@@ -79,7 +77,7 @@ This document considers two users of a given Knative Serving environment, and is
 
 # RBAC Profile
 
-In order to validate the controls described in [Resource Overview](DANGERD: FIX LINK), the following Kubernetes RBAC profile may be applied in a Kubernetes cluster. This Kubernetes RBAC is an illustrative example of the minimal profile rather than a requirement. This Role should be sufficient to develop, deploy, and manage a set of serving applications within a single namespace. Knative Conformance tests against "MUST", "MUST NOT", and "REQUIRED" conditions are expected to pass when using this profile:
+In order to validate the controls described in [Resource Overview](#resource-overview), the following Kubernetes RBAC profile may be applied in a Kubernetes cluster. This Kubernetes RBAC is an illustrative example of the minimal profile rather than a requirement. This Role should be sufficient to develop, deploy, and manage a set of serving applications within a single namespace. Knative Conformance tests against "MUST", "MUST NOT", and "REQUIRED" conditions are expected to pass when using this profile:
 
 
 ```
@@ -517,7 +515,7 @@ When a Service is created, it MUST create and own a Configuration and Route with
 *   `metadata` changes MUST be copied to both Configuration and Route.
 *   In addition, the `serving.knative.dev/service` label on the Route and Configuration MUST be set to the name of the Service.
 *   Additional `labels` and `annotations` on the Configuration and Route not specified above MUST be removed.
-*   See the documentation of `spec` in the [detailed resource fields section](DANGERD: FIX LINK) for the mapping of specific `spec` fields to the corresponding fields in Configuration and Route.
+*   See the documentation of `spec` in the [detailed resource fields section](#detailed-resources--v1beta1) for the mapping of specific `spec` fields to the corresponding fields in Configuration and Route.
 
 Similarly, the Service MUST update its `status` fields based on the corresponding `status` of its owned Route and Configuration. The Service MUST include conditions of `ConfigurationsReady` and `RoutesReady` in addition to the generic `Ready` condition; other conditions MAY also be present.
 
@@ -593,11 +591,11 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
    <td><code>template</code>
    </td>
    <td>
-<a href="DANGERD: FIX LINK">RevisionTemplateSpec</a> \
+<a href="#revisiontemplatespec">RevisionTemplateSpec</a> \
 (Required)
    </td>
    <td>A template for the current desired application state. Changes to <code>template</code> will cause a new Revision to be created
-<a href="DANGERD: FIX LINK">as defined in the lifecycle section</a>. The contents of the Service's RevisionTemplateSpec is used to create a corresponding Configuration.
+<a href="#resource-lifecycle">as defined in the lifecycle section</a>. The contents of the Service's RevisionTemplateSpec is used to create a corresponding Configuration.
    </td>
    <td>REQUIRED
    </td>
@@ -606,7 +604,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
    <td><code>traffic</code>
    </td>
    <td>[]
-<a href="DANGERD: FIX LINK">TrafficTarget</a>
+<a href="#traffic-target">TrafficTarget</a>
 <p>
 (Optional)
    </td>
@@ -637,7 +635,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
    <td><code>conditions</code>
    </td>
    <td>
-<a href="DANGERD: FIX LINK">See Error Signalling</a>
+<a href="#error-signalling">See Error Signalling</a>
    </td>
    <td>Used for signalling errors, see link. Conditions of type Ready MUST be present. Conditions of type ConfigurationsReady and RoutesReady MAY be present.
    </td>
@@ -670,7 +668,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
    <td>An implementation of the 
 
 
-<a href="DANGERD: FIX LINK">Addressable</a> contract (an object with a <code>url</code> string).
+<a href="#addressable">Addressable</a> contract (an object with a <code>url</code> string).
    </td>
    <td>A duck-typed interface for loading the delivery address of the destination, copied from the owned Route. The URL provided in address MAY only be internally-routable.
    </td>
@@ -683,7 +681,7 @@ Service `labels` and `annotations` MUST be copied to the `labels` and `annotatio
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">TrafficTarget</a>
+<a href="#traffictarget">TrafficTarget</a>
    </td>
    <td>Detailed current traffic split routing information.
    </td>
@@ -744,14 +742,14 @@ Configuration `labels` and `annotations` MUST NOT be copied to the `labels` and 
    <td>
 
 
-<a href="DANGERD: FIX LINK">RevisionTemplateSpec</a>
+<a href="#revisiontemplatespec">RevisionTemplateSpec</a>
 <p>
 (Required)
    </td>
    <td>A template for the current desired application state. Changes to <code>template</code> will cause a new Revision to be created 
 
 
-<a href="DANGERD: FIX LINK">as defined in the lifecycle section</a>.
+<a href="#resource-lifecycle">as defined in the lifecycle section</a>.
    </td>
    <td>REQUIRED
    </td>
@@ -780,7 +778,7 @@ Configuration `labels` and `annotations` MUST NOT be copied to the `labels` and 
    <td>
 
 
-<a href="DANGERD: FIX LINK">See Error Signalling</a>
+<a href="#error-signalling">See Error Signalling</a>
    </td>
    <td>Used for signalling errors, see link. Condition of type Ready MUST be present.
    </td>
@@ -849,7 +847,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">TrafficTarget</a>
+<a href="#traffictarget">TrafficTarget</a>
 <p>
 (Optional)
    </td>
@@ -882,7 +880,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
    <td>
 
 
-<a href="DANGERD: FIX LINK">See Error Signalling</a>
+<a href="#error-signalling">See Error Signalling</a>
    </td>
    <td>Used for signalling errors, see link. Conditions of types Ready MUST be present. `AllTrafficAssigned`, `IngressReady`, and `CertificateProvisioned` MAY be present. 
    </td>
@@ -915,7 +913,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
    <td>An implementation of the 
 
 
-<a href="DANGERD: FIX LINK">Addressable</a> contract (an object with a <code>url</code> string).
+<a href="#addressable">Addressable</a> contract (an object with a <code>url</code> string).
    </td>
    <td>A duck-typed interface for loading the delivery address of the destination. The URL provided in address MAY only be internally-routable.
    </td>
@@ -928,7 +926,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">TrafficTarget</a>
+<a href="#traffictarget">TrafficTarget</a>
    </td>
    <td>Detailed current traffic split routing information.
    </td>
@@ -967,7 +965,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">Container</a>
+<a href="#container">Container</a>
 <p>
 (Required)
 <p>
@@ -986,7 +984,7 @@ Max: 1
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">Volume</a>
+<a href="#volume">Volume</a>
 <p>
 (Optional)
    </td>
@@ -1021,7 +1019,7 @@ Default: 0
 See 
 
 
-<a href="DANGERD: FIX LINK">Request Routing</a> for more details on what constitutes a request.
+<a href="#request-routing">Request Routing</a> for more details on what constitutes a request.
    </td>
    <td>REQUIRED
    </td>
@@ -1062,7 +1060,7 @@ See
    <td>
 
 
-<a href="DANGERD: FIX LINK">See Error Signalling</a>
+<a href="#error-signalling">See Error Signalling</a>
    </td>
    <td>Used for signalling errors, see link. Conditions of type Ready MUST be present. Conditions of type Active, ContainerHealthy, ResourcesAvailable  MAY be present. 
    </td>
@@ -1134,7 +1132,7 @@ Although `container,` `volumes,` and types that they reference are based upon co
    <td>ConfigurationName of a configuration to whose latest Revision we will send this portion of traffic. Tracks latestReadyRevisionName for the Configuration. This field is never set in <code>status</code>, only in <code>spec</code>. This is mutually exclusive with revisionName. This field is disallowed when used in 
 
 
-<a href="DANGERD: FIX LINK">ServiceSpec</a>.
+<a href="#spec">ServiceSpec</a>.
    </td>
    <td>REQUIRED
    </td>
@@ -1177,7 +1175,7 @@ Max: 100
    <td>The 
 
 
-<a href="DANGERD: FIX LINK">percentage of requests which should be allocated from the main Route domain name</a> to the specified <code>revisionName</code> or <code>configurationName</code>.
+<a href="#request-routing">percentage of requests which should be allocated from the main Route domain name</a> to the specified <code>revisionName</code> or <code>configurationName</code>.
 <p>
 All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    </td>
@@ -1218,7 +1216,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td>
 
 
-<a href="DANGERD: FIX LINK">RevisionMetadata</a>
+<a href="#revisionmetadata">RevisionMetadata</a>
    </td>
    <td>The requested metadata for the Revision.
    </td>
@@ -1231,7 +1229,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td>
 
 
-<a href="DANGERD: FIX LINK">RevisionSpec</a>
+<a href="#revisionspec">RevisionSpec</a>
    </td>
    <td>The requested spec for the Revision.
    </td>
@@ -1286,7 +1284,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">EnvVar</a>
+<a href="#envvar">EnvVar</a>
 <p>
 (Optional)
    </td>
@@ -1301,7 +1299,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">EnvFromSource</a>
+<a href="#envfromsource">EnvFromSource</a>
 <p>
 (Optional)
    </td>
@@ -1340,7 +1338,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td>
 
 
-<a href="DANGERD: FIX LINK">Probe</a>
+<a href="#probe">Probe</a>
 <p>
 (Optional)
    </td>
@@ -1367,7 +1365,7 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">ContainerPort</a>
+<a href="#containerport">ContainerPort</a>
 <p>
 (Optional)
 <p>
@@ -1386,7 +1384,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">Probe</a>
+<a href="#probe">Probe</a>
 <p>
 (Optional)
    </td>
@@ -1401,7 +1399,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">ResourceRequirements</a>
+<a href="#resourcerequirements">ResourceRequirements</a>
 <p>
 (Optional)
    </td>
@@ -1416,7 +1414,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">SecurityContext</a>
+<a href="#securitycontext">SecurityContext</a>
 <p>
 (Optional)
    </td>
@@ -1455,7 +1453,7 @@ Max: 1
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">VolumeMount</a>
+<a href="#volumemount">VolumeMount</a>
 <p>
 (Optional)
    </td>
@@ -1524,7 +1522,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">EnvVarSource</a>
+<a href="#envvarsource">EnvVarSource</a>
 <p>
 (Optional)
    </td>
@@ -1557,7 +1555,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">ConfigMapKeySelector</a>
+<a href="#configmapkeyselector">ConfigMapKeySelector</a>
 <p>
 (Optional)
    </td>
@@ -1572,7 +1570,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">SecretKeySelector</a>
+<a href="#secretkeyselector">SecretKeySelector</a>
 <p>
 (Optional)
    </td>
@@ -1701,7 +1699,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">ExecAction</a>
+<a href="#execaction">ExecAction</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#probe-v1-core">core/v1.Probe</a>.
    </td>
@@ -1724,7 +1722,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">HTTPGetAction</a>
+<a href="#httpgetaction">HTTPGetAction</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#probe-v1-core">core/v1.Probe</a>.
    </td>
@@ -1757,7 +1755,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">TCPSocketAction</a>
+<a href="#tcpsocketaction">TCPSocketAction</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#probe-v1-core">core/v1.Probe</a>.
    </td>
@@ -1798,7 +1796,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">ConfigMapEnvSource</a>
+<a href="#configmapenvsource">ConfigMapEnvSource</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#envfromsource-v1-core">core/v1.EnvFromSource</a>.
    </td>
@@ -1821,7 +1819,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">SecretEnvSource</a>
+<a href="#secretenvsource">SecretEnvSource</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#envfromsource-v1-core">core/v1.EnvFromSource</a>.
    </td>
@@ -1892,7 +1890,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">HTTPHeader</a>
+<a href="#httpheader">HTTPHeader</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#httpgetaction-v1-core">core/v1.HTTPGetAction</a>.
    </td>
@@ -2261,7 +2259,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">ConfigMapVolumeSource</a>
+<a href="#configmapvolumesource">ConfigMapVolumeSource</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#volume-v1-core">core/v1.Volume</a>.
    </td>
@@ -2274,7 +2272,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">SecretVolumeSource</a>
+<a href="#secretvolumesource">SecretVolumeSource</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#volume-v1-core">core/v1.Volume</a>.
    </td>
@@ -2287,7 +2285,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">ProjectedVolumeSource</a>
+<a href="#projectedvolumesource">ProjectedVolumeSource</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#volume-v1-core">core/v1.Volume</a>.
    </td>
@@ -2328,7 +2326,7 @@ Max: 1
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">KeyToPath</a>
+<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#configmapvolumesource-v1-core">core/v1.ConfigMapVolumeSource</a>.
    </td>
@@ -2389,7 +2387,7 @@ Max: 1
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">KeyToPath</a>
+<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#secretvolumesource-v1-core">core/v1.SecretVolumeSource</a>.
    </td>
@@ -2450,7 +2448,7 @@ Max: 1
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">VolumeProjection</a>
+<a href="#volumeprojection">VolumeProjection</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#projectedvolumesource-v1-core">core/v1.ProjectedVolumeSource</a>.
    </td>
@@ -2529,7 +2527,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">ConfigMapProjection</a>
+<a href="#configmapprojection">ConfigMapProjection</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#volumeprojection-v1-core">core/v1.VolumeProjection.</a>
    </td>
@@ -2542,7 +2540,7 @@ Max: 1
    <td>
 
 
-<a href="DANGERD: FIX LINK">SecretProjection</a>
+<a href="#secretprojection">SecretProjection</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#volumeprojection-v1-core">core/v1.VolumeProjection.</a>
    </td>
@@ -2573,7 +2571,7 @@ Max: 1
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">KeyToPath</a>
+<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#configmapprojection-v1-core">core/v1.ConfigMapProjection.</a>
    </td>
@@ -2624,7 +2622,7 @@ Max: 1
    <td>[]
 
 
-<a href="DANGERD: FIX LINK">KeyToPath</a>
+<a href="#keytopath">KeyToPath</a>
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#secretprojection-v1-core">core/v1.SecretProjection.</a>
    </td>
