@@ -952,6 +952,7 @@ Standard Kubernetes [meta.v1/ObjectMeta](https://kubernetes.io/docs/reference/ge
    <td>[]<a href="#container">Container</a>
 (Required)
 Min: 1
+<br>
 Max: 1
    </td>
    <td>Specifies the parameters used to execute each container instance corresponding to this Revision.
@@ -1138,11 +1139,9 @@ Although `container,` `volumes,` and types that they reference are based upon co
    <td><code>percent</code>
    </td>
    <td>int 
-<p>
 (Required)
-<p>
 Min: 0
-<p>
+<br>
 Max: 100
    </td>
    <td>The 
@@ -1328,11 +1327,9 @@ All <code>percent</code> values in <code>traffic</code> MUST sum to 100.
    <td><code>ports</code>
    </td>
    <td>[]<a href="#containerport">ContainerPort</a>
-<p>
 (Optional)
-<p>
 Min: 0
-<p>
+<br>
 Max: 1
    </td>
    <td>Only a single <code>port</code> may be specified. The port must be named <a href="https://github.com/knative/serving/blob/master/docs/runtime-contract.md#protocols-and-ports">as described in the runtime contract</a>.
@@ -1347,7 +1344,6 @@ Max: 1
 
 
 <a href="#probe">Probe</a>
-<p>
 (Optional)
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#container-v1-core">core/v1.Container</a>.
@@ -1362,7 +1358,6 @@ Max: 1
 
 
 <a href="#resourcerequirements">ResourceRequirements</a>
-<p>
 (Optional)
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#container-v1-core">core/v1.Container</a>. 
@@ -1377,7 +1372,6 @@ Max: 1
 
 
 <a href="#securitycontext">SecurityContext</a>
-<p>
 (Optional)
    </td>
    <td>In <code>securityContext</code>, only <code>runAsUser</code> MAY be set.
@@ -1482,7 +1476,6 @@ Max: 1
 
 
 <a href="#envvarsource">EnvVarSource</a>
-<p>
 (Optional)
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#envvar-v1-core">core/v1.EnvVar</a>. Must have one of value or valueFrom.
@@ -1515,7 +1508,6 @@ Max: 1
 
 
 <a href="#configmapkeyselector">ConfigMapKeySelector</a>
-<p>
 (Optional)
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#envvarsource-v1-core">core/v1.EnvVarSource</a>. Must have one of configMapKeyRef or secretKeyRef.
@@ -1530,7 +1522,6 @@ Max: 1
 
 
 <a href="#secretkeyselector">SecretKeySelector</a>
-<p>
 (Optional)
    </td>
    <td>As specified in Kubernetes <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/#envvarsource-v1-core">core/v1.EnvVarSource</a>. Must have one of configMapKeyRef or secretKeyRef.
